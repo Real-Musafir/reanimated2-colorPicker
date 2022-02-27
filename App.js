@@ -32,7 +32,12 @@ export default function App() {
       <View style={styles.topContainer} />
 
       <View style={styles.bottomContainer}>
-        <ColorPicker colors={COLORS} />
+        <ColorPicker
+          colors={COLORS}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.gradient}
+        />
       </View>
     </>
   );
@@ -46,5 +51,8 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flex: 1,
     backgroundColor: BACKGROUND_COLOR,
+    alignItems: "center",
+    justifyContent: "center",
   },
+  gradient: { height: 40, width: PICKER_WIDTH, borderRadius: 20 },
 });

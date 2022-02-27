@@ -2,14 +2,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { View, Text } from "react-native";
 
-function ColorPicker({ colors }) {
+function ColorPicker({ colors, start, end, style }) {
   return (
-    <LinearGradient
-      colors={colors}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
-      style={{ height: 50, width: "90%" }}
-    />
+    <LinearGradient colors={colors} start={start} end={end} style={style} />
   );
 }
 
