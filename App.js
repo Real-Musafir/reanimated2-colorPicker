@@ -1,19 +1,47 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useCallback } from "react";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
+
+const COLORS = [
+  "red",
+  "purple",
+  "blue",
+  "cyan",
+  "green",
+  "yellow",
+  "orange",
+  "black",
+  "white",
+];
+
+const BACKGROUND_COLOR = "rgba(0,0,0,0.9)";
+
+const { width } = Dimensions.get("window");
+
+const CIRCLE_SIZE = width * 0.8;
+const PICKER_WIDTH = width * 0.9;
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>asdf</Text>
-    </View>
+    <>
+      <View style={styles.topContainer} />
+
+      <View style={styles.bottomContainer}></View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  topContainer: {
+    flex: 3,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+  },
+  bottomContainer: {
+    flex: 1,
+    backgroundColor: BACKGROUND_COLOR,
   },
 });
