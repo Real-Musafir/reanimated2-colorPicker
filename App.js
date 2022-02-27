@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
+import ColorPicker from "./components/ColorPicker";
 
 const COLORS = [
   "red",
@@ -30,7 +31,9 @@ export default function App() {
     <>
       <View style={styles.topContainer} />
 
-      <View style={styles.bottomContainer}></View>
+      <View style={styles.bottomContainer}>
+        <ColorPicker colors={COLORS} />
+      </View>
     </>
   );
 }
