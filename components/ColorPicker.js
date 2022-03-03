@@ -6,15 +6,23 @@ import Animated, {
   event,
   useAnimatedGestureHandler,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
 } from "react-native-reanimated";
 
-function ColorPicker({ colors, start, end, style }) {
+function ColorPicker({ colors, start, end, style, maxWidth }) {
   const translateX = useSharedValue(0);
+
+  const adjustedTranslateX = useDerivedValue(() => {
+    return Math.min(
+      Math.max(translateX.value, 0),
+      maxWidth - CIRCLE_PICKER_SIZE
+    );
+  });
 
   const panGestureEvent = useAnimatedGestureHandler({
     onStart: (_, context) => {
-      context.x = translateX.value;
+      context.x = adjustedTranslateX.value;
     },
     onActive: (event, context) => {
       translateX.value = event.translationX + context.x;
@@ -24,7 +32,7 @@ function ColorPicker({ colors, start, end, style }) {
 
   const reStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateX: translateX.value }],
+      transform: [{ translateX: adjustedTranslateX.value }],
     };
   });
 
