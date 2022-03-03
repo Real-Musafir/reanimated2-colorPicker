@@ -4,6 +4,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   event,
+  interpolateColor,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useDerivedValue,
@@ -38,6 +39,37 @@ function ColorPicker({ colors, start, end, style, maxWidth }) {
     },
   });
 
+  const rInternalPickerStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      translateX.value,
+      [
+        (1 / 9) * maxWidth,
+        (2 / 9) * maxWidth,
+        (3 / 9) * maxWidth,
+        (4 / 9) * maxWidth,
+        (5 / 9) * maxWidth,
+        (6 / 9) * maxWidth,
+        (7 / 9) * maxWidth,
+        (8 / 9) * maxWidth,
+        (9 / 9) * maxWidth,
+      ],
+      [
+        "red",
+        "purple",
+        "blue",
+        "cyan",
+        "green",
+        "yellow",
+        "orange",
+        "black",
+        "white",
+      ]
+    );
+    return {
+      backgroundColor,
+    };
+  });
+
   const reStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -53,7 +85,9 @@ function ColorPicker({ colors, start, end, style, maxWidth }) {
       <Animated.View style={{ justifyContent: "center" }}>
         <LinearGradient colors={colors} start={start} end={end} style={style} />
         <Animated.View style={[styles.picker, reStyle]}>
-          <Animated.View style={styles.internalPicker} />
+          <Animated.View
+            style={[styles.internalPicker, rInternalPickerStyle]}
+          />
         </Animated.View>
       </Animated.View>
     </PanGestureHandler>
