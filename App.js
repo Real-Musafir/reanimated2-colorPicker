@@ -27,9 +27,24 @@ const CIRCLE_SIZE = width * 0.8;
 const PICKER_WIDTH = width * 0.9;
 
 export default function App() {
+  const pickedColor = useSharedValue(COLORS[0]);
+
+  const onColorChanged = useCallback((color) => {
+    "worklet";
+    pickedColor.value = color;
+  }, []);
+
+  const rStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: pickedColor.value,
+    };
+  });
+
   return (
     <>
-      <View style={styles.topContainer} />
+      <View style={styles.topContainer}>
+        <Animated.View style={[styles.circle, rStyle]} />
+      </View>
 
       <View style={styles.bottomContainer}>
         <ColorPicker
@@ -38,6 +53,7 @@ export default function App() {
           end={{ x: 1, y: 0 }}
           style={styles.gradient}
           maxWidth={PICKER_WIDTH}
+          onColorChanged={onColorChanged}
         />
       </View>
     </>
@@ -48,6 +64,9 @@ const styles = StyleSheet.create({
   topContainer: {
     flex: 3,
     backgroundColor: "#fff",
+    backgroundColor: BACKGROUND_COLOR,
+    alignItems: "center",
+    justifyContent: "center",
   },
   bottomContainer: {
     flex: 1,
@@ -56,4 +75,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   gradient: { height: 40, width: PICKER_WIDTH, borderRadius: 20 },
+  circle: {
+    width: CIRCLE_SIZE,
+    height: CIRCLE_SIZE,
+    borderRadius: CIRCLE_SIZE / 2,
+  },
 });

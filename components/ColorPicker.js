@@ -12,7 +12,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
-function ColorPicker({ colors, start, end, style, maxWidth }) {
+function ColorPicker({ colors, start, end, style, maxWidth, onColorChanged }) {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
   const scale = useSharedValue(1);
@@ -48,6 +48,7 @@ function ColorPicker({ colors, start, end, style, maxWidth }) {
       inputRange,
       colors
     );
+    onColorChanged?.(backgroundColor);
     return {
       backgroundColor,
     };
