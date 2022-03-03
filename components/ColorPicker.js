@@ -40,30 +40,13 @@ function ColorPicker({ colors, start, end, style, maxWidth }) {
   });
 
   const rInternalPickerStyle = useAnimatedStyle(() => {
+    const inputRange = colors.map(
+      (_, index) => (index / colors.length) * maxWidth
+    );
     const backgroundColor = interpolateColor(
       translateX.value,
-      [
-        (1 / 9) * maxWidth,
-        (2 / 9) * maxWidth,
-        (3 / 9) * maxWidth,
-        (4 / 9) * maxWidth,
-        (5 / 9) * maxWidth,
-        (6 / 9) * maxWidth,
-        (7 / 9) * maxWidth,
-        (8 / 9) * maxWidth,
-        (9 / 9) * maxWidth,
-      ],
-      [
-        "red",
-        "purple",
-        "blue",
-        "cyan",
-        "green",
-        "yellow",
-        "orange",
-        "black",
-        "white",
-      ]
+      inputRange,
+      colors
     );
     return {
       backgroundColor,
