@@ -1,13 +1,40 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
+import { PanGestureHandler } from "react-native-gesture-handler";
+import Animated, {
+  event,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 
 function ColorPicker({ colors, start, end, style }) {
+  const translateX = useSharedValue(0);
+
+  const panGestureEvent = useAnimatedGestureHandler({
+    onStart: (_, context) => {
+      context.x = translateX.value;
+    },
+    onActive: (event, context) => {
+      translateX.value = event.translationX + context.x;
+    },
+    onEnd: () => {},
+  });
+
+  const reStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translateX.value }],
+    };
+  });
+
   return (
-    <View style={{ justifyContent: "center" }}>
-      <LinearGradient colors={colors} start={start} end={end} style={style} />
-      <View style={styles.picker} />
-    </View>
+    <PanGestureHandler onGestureEvent={panGestureEvent}>
+      <Animated.View style={{ justifyContent: "center" }}>
+        <LinearGradient colors={colors} start={start} end={end} style={style} />
+        <Animated.View style={[styles.picker, reStyle]} />
+      </Animated.View>
+    </PanGestureHandler>
   );
 }
 
