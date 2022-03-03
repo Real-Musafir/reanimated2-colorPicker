@@ -52,13 +52,16 @@ function ColorPicker({ colors, start, end, style, maxWidth }) {
     <PanGestureHandler onGestureEvent={panGestureEvent}>
       <Animated.View style={{ justifyContent: "center" }}>
         <LinearGradient colors={colors} start={start} end={end} style={style} />
-        <Animated.View style={[styles.picker, reStyle]} />
+        <Animated.View style={[styles.picker, reStyle]}>
+          <Animated.View style={styles.internalPicker} />
+        </Animated.View>
       </Animated.View>
     </PanGestureHandler>
   );
 }
 
 const CIRCLE_PICKER_SIZE = 45;
+const INTERNAL_PICKER_SIZE = CIRCLE_PICKER_SIZE / 2;
 
 const styles = StyleSheet.create({
   picker: {
@@ -67,6 +70,15 @@ const styles = StyleSheet.create({
     width: CIRCLE_PICKER_SIZE,
     height: CIRCLE_PICKER_SIZE,
     borderRadius: CIRCLE_PICKER_SIZE / 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  internalPicker: {
+    width: INTERNAL_PICKER_SIZE,
+    height: INTERNAL_PICKER_SIZE,
+    borderRadius: INTERNAL_PICKER_SIZE / 2,
+    borderWidth: 1.0,
+    borderColor: "rgba(0,0,0,0.2)",
   },
 });
 
